@@ -9,6 +9,7 @@ import (
 	"math/big"
 	"net/http"
 	"os"
+	"time"
 )
 
 // EthError - ethereum error
@@ -38,7 +39,7 @@ type ethRequest struct {
 // EthRPC - Ethereum rpc client
 type EthRPC struct {
 	url    string
-	client httpClient
+	client http.Client
 	log    logger
 	Debug  bool
 }
@@ -46,9 +47,11 @@ type EthRPC struct {
 // New create new rpc client with given url
 func New(url string, options ...func(rpc *EthRPC)) *EthRPC {
 	rpc := &EthRPC{
-		url:    url,
-		client: http.DefaultClient,
-		log:    log.New(os.Stderr, "", log.LstdFlags),
+		url: url,
+		client: http.Client{
+			Timeout: time.Second * 3,
+		},
+		log: log.New(os.Stderr, "", log.LstdFlags),
 	}
 	for _, option := range options {
 		option(rpc)

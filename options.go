@@ -14,7 +14,7 @@ type logger interface {
 }
 
 // WithHttpClient set custom http client
-func WithHttpClient(client httpClient) func(rpc *EthRPC) {
+func WithHttpClient(client http.Client) func(rpc *EthRPC) {
 	return func(rpc *EthRPC) {
 		rpc.client = client
 	}
