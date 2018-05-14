@@ -49,7 +49,7 @@ func New(url string, options ...func(rpc *EthRPC)) *EthRPC {
 	rpc := &EthRPC{
 		url: url,
 		client: http.Client{
-			Timeout: time.Second * 3,
+			Timeout: time.Second * 5,
 		},
 		log: log.New(os.Stderr, "", log.LstdFlags),
 	}
